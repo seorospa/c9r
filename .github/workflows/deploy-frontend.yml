@@ -25,8 +25,11 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ROLE_ARN }}
           aws-region: us-east-1
-      - name: Build
+      - name: Use Node.js
         uses: actions/setup-node@v4
-      - run: npm i; npm run build
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run build
       - name: Deploy
         run: aws s3 sync dist s3://${{ secrets.BUCKET_NAME }}
